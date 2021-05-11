@@ -4,6 +4,7 @@ class Jenv < Formula
   url "https://github.com/jenv/jenv/archive/0.5.4.tar.gz"
   sha256 "15a78dab7310fb487d2c2cad7f69e05d5d797dc13f2d5c9e7d0bbec4ea3f2980"
   license "MIT"
+  revision 1
 
   head "https://github.com/jenv/jenv.git"
 
@@ -15,12 +16,13 @@ class Jenv < Formula
   end
 
   def caveats
-    <<~EOS
-      To activate jenv, add the following to your #{shell_profile}:
+    puts "To activate jenv, add the following to your #{shell_profile}:\n\n"
 
-        export PATH="$HOME/.jenv/bin:$PATH"
-        eval "$(jenv init -)"
-    EOS
+    if preferred == :fish
+      puts "status --is-interactive; and source (jenv init -|psub)"
+    else
+      puts 'eval "$(jenv init -)"'
+    end
   end
 
   test do
